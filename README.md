@@ -76,6 +76,7 @@ function my_backend(url) {
 	varnish.response(200, "text/plain", "Hello World!");
 }
 ```
+Uploading the above program and making a curl request to it would produce `Hello World!`.
 
 > varnish.sendfile(path)
 
@@ -118,6 +119,16 @@ result == "123"
 ```
 
 Storage VMs are not ephemeral like request VMs. They can also store their state through updates and even Varnish restarts given that the program writer implements this through a state file. Not covered here.
+
+## Uploading programs and live updates
+
+The upload script in the scripts folder contains a not-so-secret key as well as a Host header that is used to POST programs directly to a running Varnish instance.
+
+When a program is being uploaded, you can cancel the upload at any time. If a program fails to initialize and crashes, it will not be applied. Only programs that initialize properly can become the next active program. We recommend that tests are run as part of the initialization process. For example, in a JavaScript program we can run tests by calling the test functions from the global scope.
+
+If all tests succeed the program will become active. It is then written to disk at a specified location in the KVM VMOD configuration. That means, if the system crashes or restarts, the program will reappear as you last sent it once Varnish comes back online.
+
+To undo a program change you must send another program. The easiest way to go back in time and send a previously known good program is using version control.
 
 ## Layout
 
