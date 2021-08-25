@@ -71,9 +71,21 @@ Once an HTTP request comes in to Varnish, it will go to the given tenant, find t
 
 When called from `my_backend` or `my_post_backend` it takes the arguments and immediately produces that response. The VM program stops running and all changes to the VM are discarded.
 
+```js
+function my_backend(url) {
+	varnish.response(200, "text/plain", "Hello World!");
+}
+```
+
 > varnish.sendfile(path)
 
 If the file exists in the `www` folder, the static site builder would have embedded it automatically, and it can be referred to by the sendfile function. If the file doesn't exist, a 404 is produced instead, making it safe to use this as a fallback for unhandled paths.
+
+```js
+function my_backend(url) {
+	varnish.sendfile("/index.html");
+}
+```
 
 > varnish.fetch(url)
 
