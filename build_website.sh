@@ -6,4 +6,4 @@ pushd build
 cmake .. -G Ninja
 ninja
 popd
-time source upload.sh build/jsapp jpizza.com
+time source scripts/upload.sh build/jsapp jpizza.com
