@@ -42,8 +42,6 @@ static int eval_buf(JSContext *ctx, const void *buf, int buf_len,
 	return ret;
 }
 
-EMBED_BINARY(myjs, "src/my.js");
-
 static JSValue global_obj;
 static JSContext *g_ctx;
 static struct {
@@ -51,6 +49,9 @@ static struct {
 	JSValue backend_func;
 	JSValue post_backend_func;
 } vapi;
+
+extern char myjs[];
+extern unsigned myjs_size;
 
 static int is_storage = 0;
 int main(int argc, char** argv)
